@@ -382,6 +382,16 @@ const LoginPage = ({ setRole, setActivePage, onLogin }) => {
           border-radius: 9999px;
         }
 
+        /* Prevent Chrome/Edge autofill from overriding dark theme input styles */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active {
+          -webkit-text-fill-color: white !important;
+          -webkit-box-shadow: 0 0 0 1000px #161f30 inset !important;
+          transition: background-color 5000s ease-in-out 0s;
+        }
+
         @keyframes float {
           0% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }

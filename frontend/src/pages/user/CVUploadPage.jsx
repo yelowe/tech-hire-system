@@ -1,23 +1,6 @@
 import { useState, useRef } from "react";
-
-const mockResult = {
-  name: "Budi Setiawan",
-  position: "Frontend Developer",
-  score: 87,
-  skills: [
-    { name: "React.js", level: 92, category: "Frontend" },
-    { name: "TypeScript", level: 85, category: "Frontend" },
-    { name: "CSS/Tailwind", level: 88, category: "Frontend" },
-    { name: "Node.js", level: 72, category: "Backend" },
-    { name: "PostgreSQL", level: 65, category: "Database" },
-    { name: "Git/GitHub", level: 90, category: "Tools" },
-  ],
-  experience: "3 tahun",
-  education: "S1 Teknik Informatika",
-  recommendation: "Kandidat ini sangat cocok untuk posisi Frontend Developer. Memiliki keahlian kuat di React.js dan TypeScript yang merupakan stack utama tim. Disarankan untuk verifikasi kemampuan Node.js melalui technical test.",
-  strengths: ["Expert React.js ecosystem", "Clean code practices", "Strong UI/UX sensibility"],
-  gaps: ["Backend proficiency perlu ditingkatkan", "Belum familiar dengan microservices"],
-};
+import Icon from "../../components/common/Icon";
+import { aiFetch } from "../../utils/api";
 
 const CVUploadPage = () => {
   const [dragOver, setDragOver] = useState(false);
@@ -25,13 +8,15 @@ const CVUploadPage = () => {
   const [analyzing, setAnalyzing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [result, setResult] = useState(null);
-  const [step, setStep] = useState("upload"); // upload | analyzing | result
+  const [step, setStep] = useState("upload"); // upload | ready | analyzing | result | error
+  const [errorMsg, setErrorMsg] = useState("");
   const fileRef = useRef();
 
   const handleFile = (f) => {
     if (!f) return;
     setFile(f);
     setStep("ready");
+    setErrorMsg("");
   };
 
   const handleDrop = (e) => {
@@ -41,22 +26,47 @@ const CVUploadPage = () => {
     if (f) handleFile(f);
   };
 
-  const startAnalysis = () => {
+  const startAnalysis = async () => {
     setStep("analyzing");
     setProgress(0);
+    setErrorMsg("");
+
+    // Animasi progress bar sementara menunggu API
     let p = 0;
     const interval = setInterval(() => {
-      p += Math.random() * 15;
-      if (p >= 100) {
-        p = 100;
-        clearInterval(interval);
-        setTimeout(() => {
-          setResult(mockResult);
-          setStep("result");
-        }, 600);
+      p += Math.random() * 8;
+      if (p >= 90) p = 90; // Berhenti di 90% sampai API selesai
+      setProgress(Math.min(p, 90));
+    }, 250);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("save_to_db", "true");
+
+      const res = await aiFetch("/api/ai/analyze", {
+        method: "POST",
+        body: formData,
+      });
+
+      clearInterval(interval);
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || "Terjadi kesalahan pada server");
       }
-      setProgress(Math.min(p, 100));
-    }, 200);
+
+      const data = await res.json();
+      setProgress(100);
+      setTimeout(() => {
+        setResult(data);
+        setStep("result");
+      }, 500);
+    } catch (err) {
+      clearInterval(interval);
+      setErrorMsg(err.message || "Gagal menghubungi server AI. Pastikan FastAPI berjalan di port 8000.");
+      setStep("error");
+    }
   };
 
   const reset = () => {
@@ -65,6 +75,7 @@ const CVUploadPage = () => {
     setProgress(0);
     setResult(null);
     setStep("upload");
+    setErrorMsg("");
   };
 
   const analysisSteps = [
@@ -76,11 +87,12 @@ const CVUploadPage = () => {
   ];
 
   return (
-    <div style={{ paddingTop: 100, minHeight: "100vh" }}>
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 24px 80px" }}>
+    <div style={{ padding: "40px 6%", maxWidth: 800, margin: "0 auto", width: "100%", animation: "fadeInUp 0.4s ease-out" }}>
         {/* Header */}
         <div style={{ marginBottom: 48 }}>
-          <div className="section-tag">🤖 AI CV Analyzer</div>
+          <div className="section-tag" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <Icon name="ai" size={13} color="#a5b4fc" /> AI CV Analyzer
+          </div>
           <h1 style={{
             fontFamily: "var(--font-display)",
             fontSize: "clamp(28px, 3vw, 44px)",
@@ -117,8 +129,16 @@ const CVUploadPage = () => {
               onChange={e => handleFile(e.target.files[0])} />
 
             {!file ? (
-              <>
-                <div style={{ fontSize: 56, marginBottom: 20 }}>📄</div>
+              <div style={{ marginBottom: 20 }}>
+                <div style={{
+                  width: 72, height: 72, borderRadius: 20,
+                  background: "rgba(99,102,241,0.12)",
+                  border: "2px dashed rgba(99,102,241,0.3)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  margin: "0 auto 20px",
+                }}>
+                  <Icon name="upload" size={32} color="#6366f1" />
+                </div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 12 }}>
                   Drag & Drop CV di sini
                 </h3>
@@ -131,10 +151,20 @@ const CVUploadPage = () => {
                   ))}
                 </div>
                 <p style={{ color: "var(--text-muted)", fontSize: 12, marginTop: 16 }}>Ukuran maksimal: 10MB</p>
-              </>
+              </div>
             ) : (
               <>
-                <div style={{ fontSize: 48, marginBottom: 16 }}>✅</div>
+                <div style={{ marginBottom: 16 }}>
+                  <div style={{
+                    width: 72, height: 72, borderRadius: 20,
+                    background: "rgba(16,185,129,0.12)",
+                    border: "2px solid rgba(16,185,129,0.3)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    margin: "0 auto 16px",
+                  }}>
+                    <Icon name="checkCircle" size={32} color="#10b981" />
+                  </div>
+                </div>
                 <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8, color: "#10b981" }}>
                   File Siap Dianalisis
                 </h3>
@@ -143,7 +173,7 @@ const CVUploadPage = () => {
                   background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.2)",
                   borderRadius: 12, padding: "12px 20px", marginBottom: 8,
                 }}>
-                  <span>📄</span>
+                  <Icon name="document" size={20} color="#10b981" />
                   <div style={{ textAlign: "left" }}>
                     <div style={{ fontSize: 14, fontWeight: 600 }}>{file.name}</div>
                     <div style={{ fontSize: 12, color: "var(--text-muted)" }}>
@@ -189,11 +219,11 @@ const CVUploadPage = () => {
         {step === "ready" && (
           <div style={{ display: "flex", gap: 12 }}>
             <button className="btn-primary" onClick={startAnalysis}
-              style={{ flex: 1, justifyContent: "center", fontSize: 16, padding: "14px" }}>
-              🧠 Analisis dengan AI
+              style={{ flex: 1, justifyContent: "center", fontSize: 16, padding: "14px", gap: 8 }}>
+              <Icon name="cpu" size={17} color="white" /> Analisis dengan AI
             </button>
-            <button className="btn-secondary" onClick={reset} style={{ padding: "14px 24px" }}>
-              ✕ Reset
+            <button className="btn-secondary" onClick={reset} style={{ padding: "14px 24px", display: "flex", alignItems: "center", gap: 6 }}>
+              <Icon name="close" size={15} color="currentColor" /> Reset
             </button>
           </div>
         )}
@@ -218,7 +248,7 @@ const CVUploadPage = () => {
 
             <h3 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8 }}>AI Sedang Menganalisis...</h3>
             <p style={{ color: "var(--text-secondary)", fontSize: 14, marginBottom: 32 }}>
-              Proses ini hanya membutuhkan beberapa detik
+              Model Deep Learning sedang memproses dokumen CV Anda
             </p>
 
             {/* Progress bar */}
@@ -263,6 +293,36 @@ const CVUploadPage = () => {
           </div>
         )}
 
+        {/* Error State */}
+        {step === "error" && (
+          <div style={{
+            background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.25)",
+            borderRadius: "var(--radius-xl)", padding: 48, textAlign: "center",
+          }}>
+            <div style={{
+              width: 72, height: 72, borderRadius: "50%",
+              background: "rgba(239,68,68,0.12)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              margin: "0 auto 24px", fontSize: 32,
+            }}>⚠️</div>
+            <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 12, color: "#ef4444" }}>
+              Analisis Gagal
+            </h3>
+            <p style={{ color: "var(--text-secondary)", fontSize: 14, maxWidth: 480, margin: "0 auto 28px" }}>
+              {errorMsg}
+            </p>
+            <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+              <button className="btn-primary" onClick={() => setStep("ready")}
+                style={{ gap: 8, padding: "12px 28px" }}>
+                🔄 Coba Lagi
+              </button>
+              <button className="btn-secondary" onClick={reset} style={{ padding: "12px 24px" }}>
+                Reset
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Result */}
         {step === "result" && result && (
           <div className="animate-fade-in">
@@ -293,14 +353,20 @@ const CVUploadPage = () => {
                 }}>
                   {result.score}%
                 </div>
-                <div className="badge badge-success" style={{ fontSize: 13 }}>✅ Kandidat Sangat Cocok</div>
+                <div className="badge badge-success" style={{ fontSize: 13, display: "inline-flex", alignItems: "center", gap: 5 }}>
+                  <Icon name="check" size={12} color="#6ee7b7" /> Kandidat Sangat Cocok
+                </div>
               </div>
 
               <div style={{ textAlign: "right" }}>
                 <div style={{ fontSize: 20, fontWeight: 800, marginBottom: 4 }}>{result.name}</div>
                 <div style={{ color: "var(--text-secondary)", fontSize: 14, marginBottom: 8 }}>{result.position}</div>
-                <div style={{ fontSize: 13, color: "var(--text-muted)" }}>🎓 {result.education}</div>
-                <div style={{ fontSize: 13, color: "var(--text-muted)" }}>⏱ {result.experience}</div>
+                <div style={{ fontSize: 13, color: "var(--text-muted)", display: "flex", alignItems: "center", gap: 5 }}>
+                  <Icon name="education" size={13} color="var(--text-muted)" /> {result.education}
+                </div>
+                <div style={{ fontSize: 13, color: "var(--text-muted)", display: "flex", alignItems: "center", gap: 5 }}>
+                  <Icon name="clock" size={13} color="var(--text-muted)" /> {result.experience}
+                </div>
               </div>
             </div>
 
@@ -350,11 +416,13 @@ const CVUploadPage = () => {
                 background: "rgba(16,185,129,0.06)", border: "1px solid rgba(16,185,129,0.2)",
                 borderRadius: "var(--radius-lg)", padding: 24,
               }}>
-                <h4 style={{ fontSize: 15, fontWeight: 700, color: "#10b981", marginBottom: 14 }}>💪 Kekuatan</h4>
+                <h4 style={{ fontSize: 15, fontWeight: 700, color: "#10b981", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}>
+                  <Icon name="award" size={16} color="#10b981" /> Kekuatan
+                </h4>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
                   {result.strengths.map((s, i) => (
                     <li key={i} style={{ fontSize: 13, color: "var(--text-secondary)", display: "flex", alignItems: "center", gap: 8 }}>
-                      <span style={{ color: "#10b981" }}>✓</span> {s}
+                      <Icon name="check" size={13} color="#10b981" /> {s}
                     </li>
                   ))}
                 </ul>
@@ -364,11 +432,13 @@ const CVUploadPage = () => {
                 background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.2)",
                 borderRadius: "var(--radius-lg)", padding: 24,
               }}>
-                <h4 style={{ fontSize: 15, fontWeight: 700, color: "#f59e0b", marginBottom: 14 }}>📌 Area Peningkatan</h4>
+                <h4 style={{ fontSize: 15, fontWeight: 700, color: "#f59e0b", marginBottom: 14, display: "flex", alignItems: "center", gap: 6 }}>
+                  <Icon name="pin" size={16} color="#f59e0b" /> Area Peningkatan
+                </h4>
                 <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
                   {result.gaps.map((g, i) => (
                     <li key={i} style={{ fontSize: 13, color: "var(--text-secondary)", display: "flex", alignItems: "center", gap: 8 }}>
-                      <span style={{ color: "#f59e0b" }}>⚠</span> {g}
+                      <Icon name="warning" size={13} color="#f59e0b" /> {g}
                     </li>
                   ))}
                 </ul>
@@ -380,7 +450,9 @@ const CVUploadPage = () => {
               background: "rgba(99,102,241,0.08)", border: "1px solid rgba(99,102,241,0.2)",
               borderRadius: "var(--radius-lg)", padding: 28, marginBottom: 28,
             }}>
-              <h4 style={{ fontSize: 16, fontWeight: 700, marginBottom: 12 }}>🤖 Rekomendasi AI</h4>
+              <h4 style={{ fontSize: 16, fontWeight: 700, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
+                <Icon name="ai" size={18} color="#a5b4fc" /> Rekomendasi AI
+              </h4>
               <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.8 }}>
                 {result.recommendation}
               </p>
@@ -388,20 +460,18 @@ const CVUploadPage = () => {
 
             {/* Action */}
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button className="btn-primary" style={{ flex: 1, justifyContent: "center", padding: "14px" }}>
-                📅 Jadwalkan Interview
+              <button className="btn-primary" style={{ flex: 1, justifyContent: "center", padding: "14px", gap: 8 }}>
+                <Icon name="calendar" size={16} color="white" /> Jadwalkan Interview
               </button>
-              <button className="btn-secondary" style={{ flex: 1, justifyContent: "center", padding: "14px" }}>
-                📥 Unduh Laporan PDF
+              <button className="btn-secondary" style={{ flex: 1, justifyContent: "center", padding: "14px", gap: 8 }}>
+                <Icon name="download" size={16} color="currentColor" /> Unduh Laporan PDF
               </button>
-              <button onClick={reset} className="btn-secondary" style={{ padding: "14px 24px" }}>
-                ↺ Analisis Baru
+              <button onClick={reset} className="btn-secondary" style={{ padding: "14px 24px", display: "flex", alignItems: "center", gap: 6 }}>
+                <Icon name="refresh" size={16} color="currentColor" /> Analisis Baru
               </button>
             </div>
           </div>
         )}
-      </div>
-
       <style>{`
         @keyframes spin-slow {
           from { transform: rotate(0deg); }

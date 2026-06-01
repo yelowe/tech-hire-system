@@ -1,22 +1,24 @@
+import Icon from "../../components/common/Icon";
+
 const team = [
-  { name: "Ahmad Fauzi", role: "AI/ML Engineer", avatar: "AF", color: "#6366f1", desc: "Spesialis NLP dan model matching kandidat berbasis deep learning." },
-  { name: "Siti Rahayu", role: "Backend Developer", avatar: "SR", color: "#8b5cf6", desc: "Arsitek sistem API dan pipeline pemrosesan data CV secara real-time." },
-  { name: "Rizky Permana", role: "Frontend Engineer", avatar: "RP", color: "#06b6d4", desc: "Membangun antarmuka recruiter yang intuitif dan data-driven." },
-  { name: "Dewi Lestari", role: "UX Researcher", avatar: "DL", color: "#10b981", desc: "Memastikan produk memberikan pengalaman terbaik bagi recruiter." },
+  { name: "Ahmad Fauzi",   role: "AI/ML Engineer",      avatar: "AF", color: "#6366f1", desc: "Spesialis NLP dan model matching kandidat berbasis deep learning." },
+  { name: "Siti Rahayu",   role: "Backend Developer",   avatar: "SR", color: "#8b5cf6", desc: "Arsitek sistem API dan pipeline pemrosesan data CV secara real-time." },
+  { name: "Rizky Permana", role: "Frontend Engineer",   avatar: "RP", color: "#06b6d4", desc: "Membangun antarmuka recruiter yang intuitif dan data-driven." },
+  { name: "Dewi Lestari",  role: "UX Researcher",       avatar: "DL", color: "#10b981", desc: "Memastikan produk memberikan pengalaman terbaik bagi recruiter." },
 ];
 
 const timeline = [
-  { phase: "Fase 1", title: "Analisis Kebutuhan", desc: "Identifikasi pain point recruiter, riset pasar, dan definisi fitur utama sistem.", status: "done" },
-  { phase: "Fase 2", title: "Desain Sistem", desc: "Perancangan arsitektur AI, database schema, dan UI/UX prototype.", status: "done" },
-  { phase: "Fase 3", title: "Pengembangan Core", desc: "Implementasi CV parser, NLP engine, dan matching algorithm.", status: "active" },
-  { phase: "Fase 4", title: "Integrasi & Testing", desc: "Uji akurasi model, integrasi backend-frontend, dan QA testing.", status: "upcoming" },
-  { phase: "Fase 5", title: "Deployment", desc: "Launch platform ke production environment dan monitoring performa.", status: "upcoming" },
+  { phase: "Fase 1", title: "Analisis Kebutuhan",    desc: "Identifikasi pain point recruiter, riset pasar, dan definisi fitur utama sistem.", status: "done"     },
+  { phase: "Fase 2", title: "Desain Sistem",          desc: "Perancangan arsitektur AI, database schema, dan UI/UX prototype.",                 status: "done"     },
+  { phase: "Fase 3", title: "Pengembangan Core",      desc: "Implementasi CV parser, NLP engine, dan matching algorithm.",                      status: "active"   },
+  { phase: "Fase 4", title: "Integrasi & Testing",    desc: "Uji akurasi model, integrasi backend-frontend, dan QA testing.",                   status: "upcoming" },
+  { phase: "Fase 5", title: "Deployment",             desc: "Launch platform ke production environment dan monitoring performa.",                status: "upcoming" },
 ];
 
 const statusStyle = {
-  done: { color: "#10b981", bg: "rgba(16,185,129,0.15)", border: "rgba(16,185,129,0.3)", label: "✓ Selesai" },
-  active: { color: "#6366f1", bg: "rgba(99,102,241,0.15)", border: "rgba(99,102,241,0.3)", label: "⚡ Aktif" },
-  upcoming: { color: "#475569", bg: "rgba(71,85,105,0.15)", border: "rgba(71,85,105,0.2)", label: "○ Upcoming" },
+  done:     { color: "#10b981", bg: "rgba(16,185,129,0.15)",  border: "rgba(16,185,129,0.3)",  label: "Selesai",   icon: "check"   },
+  active:   { color: "#6366f1", bg: "rgba(99,102,241,0.15)",  border: "rgba(99,102,241,0.3)",  label: "Aktif",     icon: "zap"     },
+  upcoming: { color: "#475569", bg: "rgba(71,85,105,0.15)",   border: "rgba(71,85,105,0.2)",   label: "Upcoming",  icon: "clock"   },
 };
 
 const AboutPage = () => (
@@ -26,7 +28,8 @@ const AboutPage = () => (
       {/* Hero */}
       <div style={{ textAlign: "center", marginBottom: 80 }}>
         <div className="section-tag" style={{ margin: "0 auto 20px" }}>
-          <span>🎯</span> Tentang Proyek
+          <Icon name="globe" size={14} color="#a5b4fc" />
+          Tentang Proyek
         </div>
         <h1 style={{
           fontFamily: "var(--font-display)",
@@ -56,13 +59,22 @@ const AboutPage = () => (
         gap: 24,
         marginBottom: 80,
       }}>
+        {/* Problem */}
         <div style={{
           background: "rgba(244,63,94,0.06)",
           border: "1px solid rgba(244,63,94,0.2)",
           borderRadius: "var(--radius-xl)",
           padding: 40,
         }}>
-          <div style={{ fontSize: 36, marginBottom: 16 }}>😫</div>
+          <div style={{
+            width: 52, height: 52, borderRadius: 14,
+            background: "rgba(244,63,94,0.15)",
+            border: "1px solid rgba(244,63,94,0.3)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            marginBottom: 20,
+          }}>
+            <Icon name="warning" size={24} color="#f43f5e" />
+          </div>
           <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 16, color: "#fda4af" }}>Permasalahan</h3>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
             {[
@@ -72,20 +84,30 @@ const AboutPage = () => (
               "Tidak ada standar penilaian yang konsisten",
               "Proses hiring yang panjang dan tidak efisien",
             ].map((item, i) => (
-              <li key={i} style={{ display: "flex", gap: 10, fontSize: 14, color: "var(--text-secondary)" }}>
-                <span style={{ color: "#f43f5e", flexShrink: 0 }}>✗</span> {item}
+              <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14, color: "var(--text-secondary)" }}>
+                <Icon name="xCircle" size={15} color="#f43f5e" style={{ marginTop: 1, flexShrink: 0 }} />
+                {item}
               </li>
             ))}
           </ul>
         </div>
 
+        {/* Solution */}
         <div style={{
           background: "rgba(16,185,129,0.06)",
           border: "1px solid rgba(16,185,129,0.2)",
           borderRadius: "var(--radius-xl)",
           padding: 40,
         }}>
-          <div style={{ fontSize: 36, marginBottom: 16 }}>🚀</div>
+          <div style={{
+            width: 52, height: 52, borderRadius: 14,
+            background: "rgba(16,185,129,0.15)",
+            border: "1px solid rgba(16,185,129,0.3)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            marginBottom: 20,
+          }}>
+            <Icon name="shield" size={24} color="#10b981" />
+          </div>
           <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 16, color: "#6ee7b7" }}>Solusi Kami</h3>
           <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 12 }}>
             {[
@@ -95,8 +117,9 @@ const AboutPage = () => (
               "Standar penilaian konsisten & terukur",
               "Dashboard real-time untuk monitor pipeline",
             ].map((item, i) => (
-              <li key={i} style={{ display: "flex", gap: 10, fontSize: 14, color: "var(--text-secondary)" }}>
-                <span style={{ color: "#10b981", flexShrink: 0 }}>✓</span> {item}
+              <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 14, color: "var(--text-secondary)" }}>
+                <Icon name="checkCircle" size={15} color="#10b981" style={{ marginTop: 1, flexShrink: 0 }} />
+                {item}
               </li>
             ))}
           </ul>
@@ -117,14 +140,24 @@ const AboutPage = () => (
           position: "absolute", top: 0, left: 0, right: 0, height: 3,
           background: "linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4)",
         }} />
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 800, marginBottom: 32 }}>
-          📋 Pertanyaan Penelitian
-        </h2>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
+          <div style={{
+            width: 40, height: 40, borderRadius: 10,
+            background: "rgba(99,102,241,0.15)",
+            border: "1px solid rgba(99,102,241,0.3)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <Icon name="research" size={20} color="#a5b4fc" />
+          </div>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 800 }}>
+            Pertanyaan Penelitian
+          </h2>
+        </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           {[
-            { q: "01", title: "Pemahaman Informasi CV", desc: "Bagaimana membangun sistem yang mampu memahami informasi dalam CV secara akurat menggunakan teknologi NLP?" },
-            { q: "02", title: "Pemodelan Kecocokan", desc: "Bagaimana memodelkan kecocokan antara kandidat dan pekerjaan secara komprehensif dan terukur?" },
-            { q: "03", title: "Penyajian Rekomendasi", desc: "Bagaimana menyajikan hasil rekomendasi yang mudah dipahami dan digunakan oleh recruiter?" },
+            { q: "01", title: "Pemahaman Informasi CV",   desc: "Bagaimana membangun sistem yang mampu memahami informasi dalam CV secara akurat menggunakan teknologi NLP?" },
+            { q: "02", title: "Pemodelan Kecocokan",       desc: "Bagaimana memodelkan kecocokan antara kandidat dan pekerjaan secara komprehensif dan terukur?" },
+            { q: "03", title: "Penyajian Rekomendasi",     desc: "Bagaimana menyajikan hasil rekomendasi yang mudah dipahami dan digunakan oleh recruiter?" },
           ].map(item => (
             <div key={item.q} style={{
               display: "flex", gap: 20, padding: "20px 24px",
@@ -148,9 +181,19 @@ const AboutPage = () => (
 
       {/* Timeline */}
       <div style={{ marginBottom: 80 }}>
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 800, marginBottom: 40, textAlign: "center" }}>
-          🗓️ Roadmap Pengembangan
-        </h2>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 40 }}>
+          <div style={{
+            width: 40, height: 40, borderRadius: 10,
+            background: "rgba(99,102,241,0.15)",
+            border: "1px solid rgba(99,102,241,0.3)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <Icon name="calendar" size={20} color="#a5b4fc" />
+          </div>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 800 }}>
+            Roadmap Pengembangan
+          </h2>
+        </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
           {timeline.map((item, i) => {
             const st = statusStyle[item.status];
@@ -171,9 +214,8 @@ const AboutPage = () => (
                     width: 40, height: 40, borderRadius: "50%",
                     background: st.bg, border: `2px solid ${st.border}`,
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 14, color: st.color,
                   }}>
-                    {item.status === "done" ? "✓" : item.status === "active" ? "⚡" : "○"}
+                    <Icon name={st.icon} size={16} color={st.color} />
                   </div>
                 </div>
 
@@ -182,9 +224,12 @@ const AboutPage = () => (
                   <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
                     <span style={{ fontSize: 12, color: "var(--text-muted)", fontWeight: 600 }}>{item.phase}</span>
                     <span style={{
-                      display: "inline-flex", padding: "2px 10px", borderRadius: 999,
+                      display: "inline-flex", alignItems: "center", gap: 4,
+                      padding: "2px 10px", borderRadius: 999,
                       fontSize: 11, fontWeight: 600, background: st.bg, color: st.color, border: `1px solid ${st.border}`,
-                    }}>{st.label}</span>
+                    }}>
+                      {st.label}
+                    </span>
                   </div>
                   <h3 style={{ fontSize: 17, fontWeight: 700, marginBottom: 6 }}>{item.title}</h3>
                   <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.6 }}>{item.desc}</p>
@@ -197,9 +242,19 @@ const AboutPage = () => (
 
       {/* Team */}
       <div>
-        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 800, marginBottom: 40, textAlign: "center" }}>
-          👥 Tim Pengembang
-        </h2>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 40 }}>
+          <div style={{
+            width: 40, height: 40, borderRadius: 10,
+            background: "rgba(99,102,241,0.15)",
+            border: "1px solid rgba(99,102,241,0.3)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+          }}>
+            <Icon name="users" size={20} color="#a5b4fc" />
+          </div>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 800 }}>
+            Tim Pengembang
+          </h2>
+        </div>
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",

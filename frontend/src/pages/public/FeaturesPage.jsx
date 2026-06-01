@@ -1,49 +1,57 @@
+import Icon from "../../components/common/Icon";
+
 const features = [
   {
-    icon: "🤖",
+    iconName: "ai",
     title: "AI CV Analyzer",
     description: "Sistem AI kami secara otomatis mengekstrak dan menganalisis informasi dari CV — mulai dari pengalaman kerja, pendidikan, hingga soft skill yang tersembunyi.",
     gradient: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+    iconColor: "#a5b4fc",
     tag: "NLP Powered",
     bullets: ["Ekstraksi data otomatis", "Deteksi 200+ skill teknis", "Analisis sentimen profil"],
   },
   {
-    icon: "🎯",
+    iconName: "target",
     title: "Smart Matching Engine",
     description: "Algoritma machine learning kami menghitung skor kecocokan kandidat terhadap posisi secara akurat, mempertimbangkan 50+ parameter relevan.",
     gradient: "linear-gradient(135deg, #06b6d4, #6366f1)",
+    iconColor: "#67e8f9",
     tag: "ML Algorithm",
     bullets: ["Skor kecocokan 0-100%", "50+ parameter evaluasi", "Prediksi kinerja kandidat"],
   },
   {
-    icon: "📊",
+    iconName: "chartBar",
     title: "Analytics Dashboard",
     description: "Visualisasi data rekrutmen secara real-time. Pantau pipeline kandidat, performa hiring, dan insight berbasis data untuk pengambilan keputusan lebih baik.",
     gradient: "linear-gradient(135deg, #10b981, #06b6d4)",
+    iconColor: "#6ee7b7",
     tag: "Real-time Data",
     bullets: ["Laporan komprehensif", "Pipeline kandidat visual", "Insight berbasis data"],
   },
   {
-    icon: "🔍",
+    iconName: "search",
     title: "Skill Identifier",
     description: "Identifikasi dan kategorisasi skill kandidat secara mendalam — baik hard skill teknis maupun soft skill — dengan akurasi tinggi menggunakan NLP.",
     gradient: "linear-gradient(135deg, #f59e0b, #ef4444)",
+    iconColor: "#fcd34d",
     tag: "Deep Analysis",
     bullets: ["Hard & soft skill mapping", "Sertifikasi terverifikasi", "Gap analysis otomatis"],
   },
   {
-    icon: "💡",
+    iconName: "recommend",
     title: "Rekomendasi Cerdas",
     description: "Sistem memberikan rekomendasi top kandidat secara otomatis beserta alasan yang transparan, sehingga recruiter bisa membuat keputusan yang lebih percaya diri.",
     gradient: "linear-gradient(135deg, #8b5cf6, #ec4899)",
+    iconColor: "#d8b4fe",
     tag: "AI Recommendation",
     bullets: ["Top-N kandidat otomatis", "Alasan rekomendasi transparan", "Perbandingan kandidat"],
   },
   {
-    icon: "🛡️",
+    iconName: "shield",
     title: "Anti-Bias System",
     description: "Proses evaluasi yang sepenuhnya objektif berbasis data, menghilangkan bias subjektif dalam seleksi kandidat untuk hasil rekrutmen yang lebih adil.",
     gradient: "linear-gradient(135deg, #10b981, #8b5cf6)",
+    iconColor: "#6ee7b7",
     tag: "Fair & Objective",
     bullets: ["Evaluasi berbasis data", "Standar penilaian konsisten", "Audit trail transparan"],
   },
@@ -74,42 +82,29 @@ const FeatureCard = ({ feature, index }) => (
       e.currentTarget.style.borderColor = "var(--border-light)";
     }}
   >
-    {/* Top glow */}
+    {/* Subtle top accent instead of bright glow */}
     <div style={{
       position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      height: 2,
+      top: 0, left: 0, right: 0,
+      height: 1,
       background: feature.gradient,
-      opacity: 0.6,
+      opacity: 0.5,
     }} />
 
-    {/* Icon */}
-    <div style={{
-      width: 52,
-      height: 52,
-      borderRadius: 14,
-      background: feature.gradient,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      fontSize: 26,
-      marginBottom: 20,
-      boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
-    }}>
-      {feature.icon}
-    </div>
-
-    <div className="badge badge-primary" style={{ marginBottom: 14 }}>
-      {feature.tag}
+    {/* Premium minimalist Icon */}
+    <div style={{ marginBottom: 24, display: "flex", alignItems: "center", gap: 12 }}>
+      <Icon name={feature.iconName} size={28} color={feature.iconColor} />
+      <div className="badge badge-primary" style={{ margin: 0, background: "transparent", border: "1px solid var(--border-light)", color: "var(--text-secondary)" }}>
+        {feature.tag}
+      </div>
     </div>
 
     <h3 style={{
-      fontSize: 20,
-      fontWeight: 700,
+      fontSize: 18,
+      fontWeight: 600,
       color: "var(--text-primary)",
       marginBottom: 12,
+      letterSpacing: "-0.3px"
     }}>
       {feature.title}
     </h3>
@@ -117,16 +112,17 @@ const FeatureCard = ({ feature, index }) => (
     <p style={{
       fontSize: 14,
       color: "var(--text-secondary)",
-      lineHeight: 1.7,
-      marginBottom: 20,
+      lineHeight: 1.6,
+      marginBottom: 24,
     }}>
       {feature.description}
     </p>
 
-    <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
+    <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10 }}>
       {feature.bullets.map((b, i) => (
-        <li key={i} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "var(--text-secondary)" }}>
-          <span style={{ color: "#10b981", fontWeight: 700 }}>✓</span> {b}
+        <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10, fontSize: 13, color: "var(--text-muted)", lineHeight: 1.5 }}>
+          <span style={{ color: feature.iconColor, opacity: 0.6, fontSize: 14 }}>—</span>
+          {b}
         </li>
       ))}
     </ul>
@@ -145,8 +141,8 @@ const FeaturesPage = () => (
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px 100px", position: "relative" }}>
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: 72 }}>
-        <div className="section-tag" style={{ margin: "0 auto 20px" }}>
-          <span>✨</span> Fitur Unggulan
+        <div className="section-tag" style={{ margin: "0 auto 20px", background: "transparent", border: "1px solid var(--border-light)" }}>
+          Fitur Unggulan
         </div>
         <h2 style={{
           fontFamily: "var(--font-display)",

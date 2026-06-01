@@ -218,20 +218,25 @@ const LoginPage = ({ setRole, setActivePage, onLogin }) => {
       {/* RIGHT SECTION (Graphics) */}
       <div className="login-right-section">
         {/* Ambient Glowing Orbs */}
-        <div style={{ position: "absolute", top: "10%", right: "-10%", width: 350, height: 350, borderRadius: "50%", background: "rgba(99, 102, 241, 0.25)", filter: "blur(120px)", pointerEvents: "none", zIndex: 0 }} />
-        <div style={{ position: "absolute", bottom: "10%", left: "-10%", width: 300, height: 300, borderRadius: "50%", background: "rgba(6, 182, 212, 0.2)", filter: "blur(100px)", pointerEvents: "none", zIndex: 0 }} />
+        <div style={{ position: "absolute", top: "5%", right: "-15%", width: 400, height: 400, borderRadius: "50%", background: "rgba(99, 102, 241, 0.4)", filter: "blur(110px)", pointerEvents: "none", zIndex: 0 }} />
+        <div style={{ position: "absolute", bottom: "5%", left: "-15%", width: 350, height: 350, borderRadius: "50%", background: "rgba(6, 182, 212, 0.35)", filter: "blur(90px)", pointerEvents: "none", zIndex: 0 }} />
 
         {/* Grid Overlay */}
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none", zIndex: 0 }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none", zIndex: 0 }} />
 
         <div style={{ position: "relative", zIndex: 1, maxWidth: 500, margin: "0 auto", width: "100%", paddingBottom: 10 }}>
-          <div className="section-tag" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 16, background: "rgba(99, 102, 241, 0.15)", border: "1px solid rgba(99, 102, 241, 0.3)" }}>
+          <div className="section-tag" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 16, background: "rgba(255, 255, 255, 0.1)", border: "1px solid rgba(255, 255, 255, 0.2)" }}>
             <Icon name="ai" size={13} color="#a5b4fc" /> AI Recruitment System
           </div>
           <h2 style={{ fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 800, marginBottom: 16, lineHeight: 1.2, fontFamily: "var(--font-display)", color: "white" }}>
-            Revolusi Rekrutmen Berbasis <span className="gradient-text">AI Cerdas</span>
+            Revolusi Rekrutmen Berbasis <span style={{
+              background: "linear-gradient(135deg, #06b6d4 0%, #a5f3fc 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text"
+            }}>AI Cerdas</span>
           </h2>
-          <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.5, marginBottom: 32 }}>
+          <p style={{ fontSize: 14, color: "#cbd5e1", lineHeight: 1.5, marginBottom: 32 }}>
             Unggah CV, biarkan kecerdasan buatan menyaring kualifikasi, menganalisis kompetensi, dan merekomendasikan kandidat terbaik secara instan.
           </p>
 
@@ -357,9 +362,7 @@ const LoginPage = ({ setRole, setActivePage, onLogin }) => {
         .login-right-section {
           flex: 1 1 50%;
           min-width: 320px;
-          background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%), 
-                      radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%), 
-                      var(--bg-primary, #050814);
+          background: linear-gradient(135deg, #0b0d1e 0%, #15193f 40%, #20265f 85%, #2a327e 100%);
           color: var(--text-primary, #f1f5f9);
           padding: 40px 6%;
           display: flex;

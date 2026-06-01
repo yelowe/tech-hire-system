@@ -224,59 +224,59 @@ const LoginPage = ({ setRole, setActivePage, onLogin }) => {
         {/* Grid Overlay */}
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none", zIndex: 0 }} />
 
-        <div style={{ position: "relative", zIndex: 1, maxWidth: 500, margin: "0 auto", width: "100%", paddingBottom: 20 }}>
-          <div className="section-tag" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 20, background: "rgba(99, 102, 241, 0.15)", border: "1px solid rgba(99, 102, 241, 0.3)" }}>
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 500, margin: "0 auto", width: "100%", paddingBottom: 10 }}>
+          <div className="section-tag" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 16, background: "rgba(99, 102, 241, 0.15)", border: "1px solid rgba(99, 102, 241, 0.3)" }}>
             <Icon name="ai" size={13} color="#a5b4fc" /> AI Recruitment System
           </div>
-          <h2 style={{ fontSize: "clamp(28px, 3.2vw, 42px)", fontWeight: 800, marginBottom: 20, lineHeight: 1.2, fontFamily: "var(--font-display)", color: "white" }}>
+          <h2 style={{ fontSize: "clamp(24px, 3vw, 36px)", fontWeight: 800, marginBottom: 16, lineHeight: 1.2, fontFamily: "var(--font-display)", color: "white" }}>
             Revolusi Rekrutmen Berbasis <span className="gradient-text">AI Cerdas</span>
           </h2>
-          <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.6, marginBottom: 48 }}>
+          <p style={{ fontSize: 14, color: "var(--text-secondary)", lineHeight: 1.5, marginBottom: 32 }}>
             Unggah CV, biarkan kecerdasan buatan menyaring kualifikasi, menganalisis kompetensi, dan merekomendasikan kandidat terbaik secara instan.
           </p>
 
           {/* Floating Elements Mockup */}
-          <div style={{ position: "relative", height: 320 }}>
+          <div style={{ position: "relative", height: 270 }}>
             
             {/* Dashboard Mockup Card */}
             <div style={{
               position: "absolute",
-              top: 30, left: 20, right: 20,
-              height: 230,
+              top: 15, left: 15, right: 15,
+              height: 200,
               background: "rgba(13, 21, 38, 0.55)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
               border: "1px solid rgba(99, 102, 241, 0.2)",
-              borderRadius: 24,
+              borderRadius: 20,
               boxShadow: "0 25px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
-              padding: 24,
+              padding: 18,
               display: "flex",
               flexDirection: "column",
-              gap: 16
+              gap: 12
             }}>
-              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: 12 }}>
-                <div style={{ fontWeight: 800, color: "white", fontSize: 16, display: "flex", alignItems: "center", gap: 8 }}>
-                  <Icon name="analytics" size={18} color="#6366f1" /> TechHire Intelligence
+              <div style={{ display: "flex", justifyContent: "space-between", borderBottom: "1px solid rgba(255,255,255,0.08)", paddingBottom: 10 }}>
+                <div style={{ fontWeight: 800, color: "white", fontSize: 15, display: "flex", alignItems: "center", gap: 8 }}>
+                  <Icon name="analytics" size={16} color="#6366f1" /> TechHire Intelligence
                 </div>
-                <div className="badge badge-success" style={{ fontSize: 11 }}>AI Active</div>
+                <div className="badge badge-success" style={{ fontSize: 10 }}>AI Active</div>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
-                <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 16, padding: 14, display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(99, 102, 241, 0.15)", color: "#8b5cf6", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <Icon name="users" size={18} color="#8b5cf6" />
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 12, padding: 10, display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ width: 32, height: 32, borderRadius: 8, background: "rgba(99, 102, 241, 0.15)", color: "#8b5cf6", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Icon name="users" size={16} color="#8b5cf6" />
                   </div>
                   <div>
-                    <div style={{ fontSize: 18, fontWeight: 800, color: "white", lineHeight: 1.2 }}>142</div>
-                    <div style={{ fontSize: 11, color: "var(--text-secondary)" }}>Total CV Masuk</div>
+                    <div style={{ fontSize: 16, fontWeight: 800, color: "white", lineHeight: 1.2 }}>142</div>
+                    <div style={{ fontSize: 10, color: "var(--text-secondary)" }}>Total CV Masuk</div>
                   </div>
                 </div>
-                <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 16, padding: 14, display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(6, 182, 212, 0.15)", color: "#06b6d4", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <Icon name="zap" size={18} color="#06b6d4" />
+                <div style={{ background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: 12, padding: 10, display: "flex", alignItems: "center", gap: 10 }}>
+                  <div style={{ width: 32, height: 32, borderRadius: 8, background: "rgba(6, 182, 212, 0.15)", color: "#06b6d4", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Icon name="zap" size={16} color="#06b6d4" />
                   </div>
                   <div>
-                    <div style={{ fontSize: 18, fontWeight: 800, color: "white", lineHeight: 1.2 }}>98%</div>
-                    <div style={{ fontSize: 11, color: "var(--text-secondary)" }}>Akurasi AI Match</div>
+                    <div style={{ fontSize: 16, fontWeight: 800, color: "white", lineHeight: 1.2 }}>98%</div>
+                    <div style={{ fontSize: 10, color: "var(--text-secondary)" }}>Akurasi AI Match</div>
                   </div>
                 </div>
               </div>
@@ -285,21 +285,21 @@ const LoginPage = ({ setRole, setActivePage, onLogin }) => {
             {/* Floating Card 1 */}
             <div style={{
               position: "absolute",
-              top: -10, right: 0,
+              top: -15, right: 10,
               background: "rgba(13, 21, 38, 0.7)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
               border: "1px solid rgba(16, 185, 129, 0.3)",
-              borderRadius: 16,
-              padding: "12px 18px",
+              borderRadius: 12,
+              padding: "10px 16px",
               boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
-              display: "flex", alignItems: "center", gap: 10,
+              display: "flex", alignItems: "center", gap: 8,
               animation: "float 6s ease-in-out infinite"
             }}>
-              <div style={{ width: 32, height: 32, borderRadius: "50%", background: "rgba(16, 185, 129, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Icon name="check" size={16} color="#10b981" />
+              <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(16, 185, 129, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Icon name="check" size={14} color="#10b981" />
               </div>
-              <div style={{ color: "white", fontWeight: 700, fontSize: 12, lineHeight: 1.3 }}>
+              <div style={{ color: "white", fontWeight: 700, fontSize: 11, lineHeight: 1.3 }}>
                 Proses Instan &lt; 5 Detik
               </div>
             </div>
@@ -307,22 +307,22 @@ const LoginPage = ({ setRole, setActivePage, onLogin }) => {
             {/* Floating Card 2 */}
             <div style={{
               position: "absolute",
-              bottom: 10, left: 0,
+              bottom: 10, left: 10,
               background: "rgba(13, 21, 38, 0.7)",
               backdropFilter: "blur(20px)",
               WebkitBackdropFilter: "blur(20px)",
               border: "1px solid rgba(6, 182, 212, 0.3)",
-              borderRadius: 16,
-              padding: "12px 18px",
+              borderRadius: 12,
+              padding: "10px 16px",
               boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
-              display: "flex", alignItems: "center", gap: 10,
+              display: "flex", alignItems: "center", gap: 8,
               animation: "float 6s ease-in-out infinite",
               animationDelay: "3s"
             }}>
-              <div style={{ width: 32, height: 32, borderRadius: "50%", background: "rgba(6, 182, 212, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Icon name="ai" size={16} color="#06b6d4" />
+              <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(6, 182, 212, 0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Icon name="ai" size={14} color="#06b6d4" />
               </div>
-              <div style={{ color: "white", fontWeight: 700, fontSize: 12, lineHeight: 1.3 }}>
+              <div style={{ color: "white", fontWeight: 700, fontSize: 11, lineHeight: 1.3 }}>
                 Smart Skill Mapping
               </div>
             </div>
@@ -357,14 +357,18 @@ const LoginPage = ({ setRole, setActivePage, onLogin }) => {
         .login-right-section {
           flex: 1 1 50%;
           min-width: 320px;
-          background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-          color: white;
-          padding: 60px 40px;
+          background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%), 
+                      radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%), 
+                      var(--bg-primary, #050814);
+          color: var(--text-primary, #f1f5f9);
+          padding: 40px 6%;
           display: flex;
           flex-direction: column;
+          justify-content: center;
           position: relative;
           overflow: hidden;
           height: 100%;
+          border-left: 1px solid var(--border-light, rgba(255, 255, 255, 0.06));
         }
 
         .login-left-section::-webkit-scrollbar {
